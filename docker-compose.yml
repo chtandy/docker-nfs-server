@@ -1,0 +1,30 @@
+version: '3'
+services:
+  nfs-server:
+    image: nfs-server
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    cap_add:
+      - SYS_ADMIN
+    container_name: nfs-server
+    hostname: nfs-server
+    ports:
+      - 2049:2049
+      - 111:111
+      - 32765:32765
+      - 32767:32767
+      - 32765:32765/udp
+      - 32767:32767/udp
+
+    volumes:
+      - ./data/nfs-server:/data/nfs-server
+      - ./data/conf/exports:/etc/exports:ro
+    restart: always
+    network_mode: host
+
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "5"

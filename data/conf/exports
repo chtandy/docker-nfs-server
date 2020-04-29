@@ -1,0 +1,1 @@
+/data/nfs-server  *(rw,sync,no_root_squash)
